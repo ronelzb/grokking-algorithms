@@ -12,26 +12,26 @@ def find_lowest_cost_node(costs):
     return lowest_cost_node
 
 
-def fastest_path(start):
+def dijkstra(start):
     costs = {}
     parents = {}
 
-    # initialize costs and parents
-    for key in graph[start].keys():
+    for key in graph[start]:
         costs[key] = graph[start][key]
         parents[key] = start
 
     node = find_lowest_cost_node(costs)
-    while node is not None:
+
+    while node:
         cost = costs[node]
         neighbors = graph[node]
 
-        for n in neighbors.keys():
-            new_cost = cost + neighbors[n]
+        for neighbor in neighbors:
+            new_cost = cost + neighbors[neighbor]
 
-            if n not in costs or costs[n] > new_cost:
-                costs[n] = new_cost
-                parents[n] = node
+            if neighbor not in costs or costs[neighbor] > new_cost:
+                costs[neighbor] = new_cost
+                parents[neighbor] = node
 
         visited.add(node)
         node = find_lowest_cost_node(costs)
@@ -40,6 +40,9 @@ def fastest_path(start):
     return parents
 
 
-graph = {"start": {"a": 6, "b": 2}, "a": {"end": 1}, "b": {"a": 3, "end": 5}, "end": {}}
+# graph = {"start": {"a": 6, "b": 2}, "a": {"end": 1}, "b": {"a": 3, "end": 5}, "end": {}}
+graph = {"start": {"a": 5, "b": 2}, "a": {"c": 4, "d": 2}, "b": {"a": 8, "d": 7}, "c": {"end": 3, "d": 6},
+         "d": {"end": 1}, "end": {}}
 visited = set()
-print(fastest_path("start"))
+
+print(dijkstra("start"))
